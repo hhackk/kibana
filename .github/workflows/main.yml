@@ -31,10 +31,8 @@ jobs:
            wget -q https://github.com/elastic/kibana/archive/refs/tags/v7.12.0.zip
            unzip -q v7.12.0.zip > /dev/null
            cd kibana-7.12.0
-           npm install -g yarn
-           yarn kbn bootstrap
            cd ..
-           zip -r kibana-7.12.0.zip kibana-7.12.0
+           zip -rq kibana-7.12.0.zip kibana-7.12.0
            - name: Create Release
               id: create_release
               uses: actions/create-release@v1
