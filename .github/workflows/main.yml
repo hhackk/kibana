@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 14.17.6
       - run: | 
            wget -q https://github.com/elastic/kibana/archive/refs/tags/v7.15.1.zip
            unzip -q v7.15.1.zip > /dev/null
