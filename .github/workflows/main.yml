@@ -1,4 +1,4 @@
-# This is a basic workflow to help you get started with Actions
+
 
 name: CI
 
@@ -13,27 +13,27 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+    name: Upload Release Asset
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v1
         with:
-          node-version: 14.16.0
-      - run: | 
+           node-version: 14.16.0
+      - name: Build kibana
+        run: | 
            wget -q https://github.com/elastic/kibana/archive/refs/tags/v7.12.0.zip
            unzip -q v7.12.0.zip > /dev/null
            cd kibana-7.12.0
            cd ..
            zip -rq kibana-7.12.0.zip kibana-7.12.0
-      - uses: actions/create-release@v1
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -41,12 +41,13 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-      - uses: actions/upload-release-asset@v1
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./kibana-7.12.0.zip
-          asset_name: kibana-7.12.0.zip
+          asset_path: ./my-artifact.zip
+          asset_name: my-artifact.zip
           asset_content_type: application/zip
-    
