@@ -28,8 +28,8 @@ jobs:
         with:
           node-version: 14
       - run: | 
-           wget https://github.com/elastic/kibana/archive/refs/tags/v7.15.1.zip
-           unzip v7.15.1.zip
+           wget -q https://github.com/elastic/kibana/archive/refs/tags/v7.15.1.zip
+           unzip -q v7.15.1.zip
            find -type f
            cd kibana
            npm install -g yarn
