@@ -28,9 +28,9 @@ jobs:
         with:
           node-version: 10.21.0
       - run: | 
-           wget -q https://github.com/elastic/kibana/archive/refs/tags/v7.8.0.zip
-           unzip -q v7.8.0.zip > /dev/null
-           cd kibana-7.8.0
+           wget -q https://github.com/elastic/kibana/archive/refs/tags/v7.12.0.zip
+           unzip -q v7.12.0.zip > /dev/null
+           cd kibana-7.12.0
            npm install -g yarn
            yarn kbn bootstrap
     
