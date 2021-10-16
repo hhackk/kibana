@@ -24,12 +24,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: GuillaumeFalourd/clone-github-repo-action@v1
+      - uses: actions/setup-node@v1
         with:
-          owner: leahneukirchen
-          repository: extrace
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          pwd
-          find -type f
+          node-version: 14
+      - run: | 
+           wget https://github.com/elastic/kibana/archive/refs/tags/v7.15.1.zip
+           unzip v7.15.1.zip
+           find -type f
+           cd kibana
+           npm install -g yarn
+           yarn kbn bootstrap
+    
